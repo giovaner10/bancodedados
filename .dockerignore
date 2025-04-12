@@ -1,0 +1,14 @@
+# Ignora pastas e arquivos locais
+.git
+.gitignore
+data/          # Diretório de dados local (se existir)
+.env           # Variáveis de ambiente (não inclua no build)
+*.log          # Logs
+
+# Ignora arquivos de IDEs/Editores
+.idea/
+.vscode/
+.DS_Store      # Arquivo de metadados do macOS
+
+# Ignora o próprio docker-compose (opcional, mas não é obrigatório)
+docker-compose.yml

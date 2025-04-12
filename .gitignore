@@ -20,3 +20,10 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
+# Docker
+/data/
+*.env
+
+# Geral
+*.log
+.DS_Store
