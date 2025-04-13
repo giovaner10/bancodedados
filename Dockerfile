@@ -1,6 +1,11 @@
-FROM postgres:14
-#Script para popular dados
-COPY init.sql /docker-entrypoint-initdb.d/ 
-ENV POSTGRES_USER=admin
-ENV POSTGRES_PASSWORD=senha123
-EXPOSE 5432
+# imagem base
+FROM mongo:6.0
+
+ENV MONGO_INITDB_ROOT_USERNAME=root
+ENV MONGO_INITDB_ROOT_PASSWORD=example
+
+# a porta do MongoDB
+EXPOSE 27017
+
+# Comando para iniciar o MongoDB (isso já é feito pela imagem oficial)
+CMD ["mongod"]
