@@ -1,11 +1,11 @@
 # bancodedados
-postgres
+mongo
 
-# Configuração do PostgreSQL com Docker
+### Configuração do PostgreSQL com Docker
 
 ## Como executar
 
-# EXECUTE APOS O FRONT E ANTES DO BACK
+### EXECUTE APOS O FRONT E ANTES DO BACK
 
 ```
 docker build -t mongo .
