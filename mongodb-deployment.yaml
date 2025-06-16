@@ -14,7 +14,7 @@ spec: # Define o estado desejado do Deployment.
     spec: # Especificação do Pod.
       containers: # Define os contêineres que serão executados dentro do Pod.
         - name: mongodb # O nome do contêiner.
-          image: mongo:6.0 # A imagem Docker do MongoDB a ser usada.
+          image: mongo:v1 # A imagem Docker do MongoDB a ser usada.
           env: # Define variáveis de ambiente para o contêiner.
             - name: MONGO_INITDB_ROOT_USERNAME # Nome de usuário root para o MongoDB.
               value: "root" # Valor do nome de usuário root.
