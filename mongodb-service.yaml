@@ -1,0 +1,11 @@
+apiVersion: v1 # Especifica a versão da API do Kubernetes para o objeto Service.
+kind: Service # Define o tipo de objeto Kubernetes como um Service.
+metadata: # Contém metadados sobre o Service.
+  name: mongodb-service # O nome do Service.
+spec: # Define o estado desejado do Service.
+  selector: # Define como o Service encontra os Pods para os quais ele roteará o tráfego.
+    app: mongodb # Roteia o tráfego para Pods com o label `app: mongodb`. Isso deve corresponder aos labels dos Pods criados pelo Deployment do MongoDB.
+  ports: # Define as portas do Service.
+    - protocol: TCP # O protocolo da porta.
+      port: 27017 # A porta na qual o Service estará escutando. Por padrão, para um Service do tipo ClusterIP (implícito aqui, pois `type` não está definido), esta porta é interna ao cluster.
+      targetPort: 27017 # A porta nos Pods MongoDB para a qual o tráfego será encaminhado. Deve corresponder à `containerPort` definida no Deployment do MongoDB.

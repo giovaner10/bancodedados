@@ -1,0 +1,42 @@
+apiVersion: apps/v1 # Especifica a versão da API do Kubernetes para o objeto Deployment.
+kind: Deployment # Define o tipo de objeto Kubernetes como um Deployment.
+metadata: # Contém metadados sobre o Deployment.
+  name: mongodb-deployment # O nome do Deployment.
+spec: # Define o estado desejado do Deployment.
+  replicas: 1 # Especifica que uma única réplica (instância) do pod do MongoDB deve ser executada.
+  selector: # Define como o Deployment encontra os Pods que ele gerencia.
+    matchLabels: # Os Pods gerenciados por este Deployment devem ter o label `app: mongodb`.
+      app: mongodb
+  template: # Define o template para os Pods que serão criados.
+    metadata: # Metadados para os Pods.
+      labels: # Labels aplicados aos Pods.
+        app: mongodb # Label para corresponder ao `selector` do Deployment.
+    spec: # Especificação do Pod.
+      containers: # Define os contêineres que serão executados dentro do Pod.
+        - name: mongodb # O nome do contêiner.
+          image: mongo:6.0 # A imagem Docker do MongoDB a ser usada.
+          env: # Define variáveis de ambiente para o contêiner.
+            - name: MONGO_INITDB_ROOT_USERNAME # Nome de usuário root para o MongoDB.
+              value: "root" # Valor do nome de usuário root.
+            - name: MONGO_INITDB_ROOT_PASSWORD # Senha root para o MongoDB.
+              value: "example" # Valor da senha root.
+          ports: # Define as portas que o contêiner expõe.
+            - containerPort: 27017 # O contêiner MongoDB escuta na porta 27017.
+          volumeMounts: # Define onde os volumes persistentes serão montados dentro do contêiner.
+            - name: mongo-storage # Nome do volume a ser montado. Deve corresponder a um volume definido em `volumes`.
+              mountPath: /data/db # Caminho dentro do contêiner onde o volume será montado (diretório de dados padrão do MongoDB).
+      volumes: # Define os volumes que podem ser usados pelos contêineres no Pod.
+        - name: mongo-storage # Nome do volume.
+          persistentVolumeClaim: # Define que este volume usará um PersistentVolumeClaim.
+            claimName: mongo-pvc # Nome do PersistentVolumeClaim a ser usado. Este PVC deve ser definido separadamente.
+---
+apiVersion: v1 # Especifica a versão da API do Kubernetes para o objeto PersistentVolumeClaim.
+kind: PersistentVolumeClaim # Define o tipo de objeto Kubernetes como um PersistentVolumeClaim (PVC).
+metadata: # Contém metadados sobre o PVC.
+  name: mongo-pvc # O nome do PersistentVolumeClaim.
+spec: # Define o estado desejado do PVC.
+  accessModes: # Define os modos de acesso ao volume.
+    - ReadWriteOnce # O volume pode ser montado como leitura-escrita por um único nó.
+  resources: # Define os recursos solicitados para o volume.
+    requests: # Solicitações de recursos.
+      storage: 1Gi # Solicita 1 Gibibyte de armazenamento.
